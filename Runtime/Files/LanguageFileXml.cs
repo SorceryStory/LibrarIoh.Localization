@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace SorceressSpell.LibrarIoh.Localization
 {
-    public class LanguageFileXml : LanguageFile
+    public class LanguageFileXml : ILanguageFile
     {
         #region Fields
 
@@ -24,35 +24,47 @@ namespace SorceressSpell.LibrarIoh.Localization
 
         #region Methods
 
-        public override void LoadBasicInfo(ref string tag, ref string name, ref string nativeName)
+        public void AddString(string stringId, string stringValue)
         {
             XmlDocument xmlDocument = LoadContent();
             XmlElement languageElement = xmlDocument.DocumentElement;
 
-            tag = languageElement.GetAttributeValue(LocalizationXmlNames.Attribute.Tag, "");
+            LanguageFileOperations.SaveStringXml(xmlDocument, languageElement, stringId, stringValue);
 
-            name = languageElement.GetAttributeValue(LocalizationXmlNames.Attribute.Name, "");
-            nativeName = languageElement.GetAttributeValue(LocalizationXmlNames.Attribute.NativeName, "");
+            _content = xmlDocument.DocumentElement.OuterXml;
         }
 
-        public override void LoadStrings(ref Dictionary<string, string> strings)
+        public void LoadBasicInfo(ref string tag, ref string name, ref string nativeName)
         {
-            XmlDocument xmlDocument = LoadContent();
-            XmlElement element = xmlDocument.DocumentElement;
+            LanguageFileOperations.GetBasicInfoXml(LoadContent().DocumentElement, ref tag, ref name, ref nativeName);
+        }
 
-            foreach (XmlElement stringElement in element.SelectNodes(LocalizationXmlNames.Tag.String))
+        public void LoadStringsTo(Dictionary<string, string> stringDictionary)
+        {
+            foreach (XmlElement stringElement in LoadContent().DocumentElement.SelectNodes(LocalizationXmlNames.Tag.String))
             {
                 string stringId = stringElement.GetAttributeValue(LocalizationXmlNames.Attribute.Id, "");
                 string stringValue = stringElement.InnerText;
 
-                if (strings.ContainsKey(stringId))
+                if (stringDictionary.ContainsKey(stringId))
                 {
-                    strings[stringId] = stringValue;
+                    stringDictionary[stringId] = stringValue;
                 }
                 else
                 {
-                    strings.Add(stringId, stringValue);
+                    stringDictionary.Add(stringId, stringValue);
                 }
+            }
+        }
+
+        public void SaveStringsXml(XmlDocument xmlDocument, XmlElement xmlElement)
+        {
+            Dictionary<string, string> stringDictionary = new Dictionary<string, string>();
+            LoadStringsTo(stringDictionary);
+
+            foreach (KeyValuePair<string, string> entry in stringDictionary)
+            {
+                LanguageFileOperations.SaveStringXml(xmlDocument, xmlElement, entry.Key, entry.Value);
             }
         }
 

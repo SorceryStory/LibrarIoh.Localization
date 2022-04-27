@@ -1,6 +1,6 @@
 ﻿namespace SorceressSpell.LibrarIoh.Localization
 {
-    public enum PlayerGender
+    public enum Gender
     {
         Male,
         Female,

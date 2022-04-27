@@ -1,11 +1,12 @@
 {
   "name": "com.sorceressspell.librarioh.localization",
   "displayName": "LibrarIoh.Localization",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "library",
   "unity": "2018.1",
-  "description": "LibrarIoh.Localization (https://github.com/SorceressSpell/LibrarIoh.Localization)\n\nLocalization utilities for LibrarIoh.\n\nDepends on:\n  - LibrarIoh.ExtensibleMarkupLanguage (https://github.com/SorceressSpell/LibrarIoh.ExtensibleMarkupLanguage)",
+  "description": "LibrarIoh.Localization (https://github.com/SorceressSpell/LibrarIoh.Localization)\n\nLocalization utilities for LibrarIoh.\n\nDepends on:\n  - LibrarIoh.Core (https://github.com/SorceressSpell/LibrarIoh.Core)\n  - LibrarIoh.ExtensibleMarkupLanguage (https://github.com/SorceressSpell/LibrarIoh.ExtensibleMarkupLanguage)",
   "dependencies": {
+    "com.sorceressspell.librarioh.core": "0.3.0",
     "com.sorceressspell.librarioh.xml": "0.2.0"
   },
   "author": {

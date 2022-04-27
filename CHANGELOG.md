@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.0] - 2022-04-26
+
+### Added
+
+- Languages can now SaveTo XmlDocument. (Now references `SorceressSpell.LibrarIoh.Core`)
+
+### Changed
+
+### Removed
+
 ## [0.2.0] - 2022-04-22
 
 ### Added

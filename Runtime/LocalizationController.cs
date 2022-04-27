@@ -43,7 +43,7 @@ namespace SorceressSpell.LibrarIoh.Localization
 
         #region Methods
 
-        public void AddLanguage(LanguageFile languageFile)
+        public void AddLanguage(ILanguageFile languageFile)
         {
             Language language = new Language(languageFile);
 
@@ -53,21 +53,32 @@ namespace SorceressSpell.LibrarIoh.Localization
             }
         }
 
+        public string GetGenderedString(string stringId, Gender gender, string defaultValue)
+        {
+            string genderedStringId = GetGenderedStringId(stringId, gender);
+            return _strings.ContainsKey(genderedStringId) ? _strings[genderedStringId] : defaultValue;
+        }
+
+        public string GetString(string stringId, string defaultValue)
+        {
+            return _strings.ContainsKey(stringId) ? _strings[stringId] : defaultValue;
+        }
+
         public void SetLanguage(string languageTag)
         {
             // If language doesn't exist, keep the old one
             if (Languages.ContainsKey(languageTag))
             {
                 CurrentLanguage = Languages[languageTag];
-                CurrentLanguage.LoadStrings(ref _strings);
+                CurrentLanguage.LoadStringsTo(_strings);
 
                 OnLanguageChanged?.Invoke(new LanguageChangedEventArgs(this, CurrentLanguage));
             }
         }
 
-        public bool TryGetGenderedString(string stringId, PlayerGender playerGender, out string localizedString)
+        public bool TryGetGenderedString(string stringId, Gender gender, out string localizedString)
         {
-            if (_strings.TryGetValue(GetGenderedStringId(stringId, playerGender), out string value))
+            if (_strings.TryGetValue(GetGenderedStringId(stringId, gender), out string value))
             {
                 localizedString = value;
                 return true;
@@ -88,12 +99,12 @@ namespace SorceressSpell.LibrarIoh.Localization
             return false;
         }
 
-        private string GetGenderedStringId(string stringId, PlayerGender playerGender)
+        private string GetGenderedStringId(string stringId, Gender gender)
         {
-            switch (playerGender)
+            switch (gender)
             {
-                case PlayerGender.Male: return stringId + "_m";
-                case PlayerGender.Female: return stringId + "_f";
+                case Gender.Male: return stringId + "_m";
+                case Gender.Female: return stringId + "_f";
                 default: return stringId;
             }
         }

@@ -4,4 +4,5 @@ Localization utilities for LibrarIoh.
 
 ## Dependencies
 
+- [LibrarIoh.Core](https://github.com/SorceressSpell/LibrarIoh.Core)
 - [LibrarIoh.ExtensibleMarkupLanguage](https://github.com/SorceressSpell/LibrarIoh.ExtensibleMarkupLanguage)
