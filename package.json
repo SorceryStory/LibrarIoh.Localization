@@ -7,7 +7,7 @@
   "description": "LibrarIoh.Localization (https://github.com/SorceryStory/LibrarIoh.Localization)\n\nLocalization utilities for LibrarIoh.\n\nDepends on:\n  - LibrarIoh.Core (https://github.com/SorceryStory/LibrarIoh.Core)\n  - LibrarIoh.ExtensibleMarkupLanguage (https://github.com/SorceryStory/LibrarIoh.ExtensibleMarkupLanguage)",
   "dependencies": {
     "com.sorceressspell.librarioh.core": "0.3.0",
-    "com.sorceressspell.librarioh.xml": "0.2.0"
+    "com.sorceressspell.librarioh.xml": "0.2.1"
   },
   "author": {
     "name": "Joana Almeida",
