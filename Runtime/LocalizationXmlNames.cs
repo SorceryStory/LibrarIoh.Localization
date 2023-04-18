@@ -1,6 +1,6 @@
 namespace SorceressSpell.LibrarIoh.Localization
 {
-    public class LocalizationXmlNames
+    public static class LocalizationXmlNames
     {
         #region Classes
 

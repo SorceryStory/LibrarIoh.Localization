@@ -4,21 +4,12 @@ namespace SorceressSpell.LibrarIoh.Localization
 {
     public class LocalizationController
     {
-        #region Fields
-
-        private Dictionary<string, string> _strings;
-
-        #endregion Fields
-
         #region Properties
 
         public Language CurrentLanguage { private set; get; }
-        public Dictionary<string, Language> Languages { private set; get; }
+        public Dictionary<string, Language> Languages { get; }
 
-        public Dictionary<string, string> Strings
-        {
-            get { return _strings; }
-        }
+        public Dictionary<string, string> Strings { get; }
 
         #endregion Properties
 
@@ -34,7 +25,7 @@ namespace SorceressSpell.LibrarIoh.Localization
         {
             Languages = new Dictionary<string, Language>();
 
-            _strings = new Dictionary<string, string>();
+            Strings = new Dictionary<string, string>();
 
             CurrentLanguage = null;
         }
@@ -56,12 +47,12 @@ namespace SorceressSpell.LibrarIoh.Localization
         public string GetGenderedString(string stringId, Gender gender, string defaultValue)
         {
             string genderedStringId = GetGenderedStringId(stringId, gender);
-            return _strings.ContainsKey(genderedStringId) ? _strings[genderedStringId] : defaultValue;
+            return Strings.ContainsKey(genderedStringId) ? Strings[genderedStringId] : defaultValue;
         }
 
         public string GetString(string stringId, string defaultValue)
         {
-            return _strings.ContainsKey(stringId) ? _strings[stringId] : defaultValue;
+            return Strings.ContainsKey(stringId) ? Strings[stringId] : defaultValue;
         }
 
         public void SetLanguage(string languageTag)
@@ -70,7 +61,7 @@ namespace SorceressSpell.LibrarIoh.Localization
             if (Languages.ContainsKey(languageTag))
             {
                 CurrentLanguage = Languages[languageTag];
-                CurrentLanguage.LoadStringsTo(_strings);
+                CurrentLanguage.LoadStringsTo(Strings);
 
                 OnLanguageChanged?.Invoke(new LanguageChangedEventArgs(this, CurrentLanguage));
             }
@@ -78,7 +69,7 @@ namespace SorceressSpell.LibrarIoh.Localization
 
         public bool TryGetGenderedString(string stringId, Gender gender, out string localizedString)
         {
-            if (_strings.TryGetValue(GetGenderedStringId(stringId, gender), out string value))
+            if (Strings.TryGetValue(GetGenderedStringId(stringId, gender), out string value))
             {
                 localizedString = value;
                 return true;
@@ -89,7 +80,7 @@ namespace SorceressSpell.LibrarIoh.Localization
 
         public bool TryGetString(string stringId, out string localizedString)
         {
-            if (_strings.TryGetValue(stringId, out string value))
+            if (Strings.TryGetValue(stringId, out string value))
             {
                 localizedString = value;
                 return true;
@@ -101,12 +92,12 @@ namespace SorceressSpell.LibrarIoh.Localization
 
         private string GetGenderedStringId(string stringId, Gender gender)
         {
-            switch (gender)
+            return gender switch
             {
-                case Gender.Male: return stringId + "_m";
-                case Gender.Female: return stringId + "_f";
-                default: return stringId;
-            }
+                Gender.Male => stringId + "_m",
+                Gender.Female => stringId + "_f",
+                _ => stringId,
+            };
         }
 
         #endregion Methods

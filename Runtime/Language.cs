@@ -9,7 +9,7 @@ namespace SorceressSpell.LibrarIoh.Localization
     {
         #region Fields
 
-        private ILanguageFile _file;
+        private readonly ILanguageFile _file;
         private string _name;
         private string _nativeName;
         private string _tag;
